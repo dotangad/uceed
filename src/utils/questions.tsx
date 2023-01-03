@@ -15,7 +15,7 @@ export type Question = {
 
 export const QuestionContext = createContext<{
   questions: Question[];
-  setSolution: (qno: number, answer: QuestionAnswer) => void;
+  setSolution: (qno: number, answer?: QuestionAnswer | undefined) => void;
 }>({ questions: [], setSolution: () => { } });
 
 export const QuestionProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -28,7 +28,7 @@ export const QuestionProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       } as Question))
   );
 
-  function setSolution(qno: number, answer: QuestionAnswer) {
+  function setSolution(qno: number, answer?: QuestionAnswer | undefined) {
     if (qno < 1 || qno > questions.length) throw new Error("Invalid question number");
 
     setQuestions(q => {

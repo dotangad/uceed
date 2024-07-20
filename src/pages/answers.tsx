@@ -1,12 +1,16 @@
 import {
   Box,
-  Flex, Table, TableCaption,
-  TableContainer, Tbody, Td, Text, Tfoot, Th, Thead, Tr
+  Flex, Table,
+  Thead,
+  Tbody, Tr,
+  Th,
+  Td, TableContainer
 } from "@chakra-ui/react";
 import { type NextPage } from "next";
 import Head from "next/head";
-import { useContext, useState } from "react";
-import { MCQAnswer, Question, QuestionContext } from "../utils/questions";
+import { useContext } from "react";
+import Header from "../components/Header";
+import { QuestionContext } from "../utils/questions";
 
 const Answers: NextPage = () => {
   const { questions } = useContext(QuestionContext);
@@ -16,7 +20,7 @@ const Answers: NextPage = () => {
       <Head>
         <title>UCEED 2023</title>
       </Head>
-      <Box bg="gray.100" width="100%" height="100%">
+      <Box>
         <Flex
           flexDir="column"
           alignItems="stretch"
@@ -27,18 +31,7 @@ const Answers: NextPage = () => {
           maxWidth="2xl"
           width="100%"
           height="100%">
-          <Flex
-            py={2}
-            borderBottom="2px solid"
-            borderBottomColor="gray.200"
-            justifyContent="space-between"
-            alignItems="center">
-            <Text
-              fontSize="xl"
-              fontWeight="bold">
-              UCEED 2023
-            </Text>
-          </Flex>
+          <Header showTimer={false} />
 
           <Flex
             maxW="md"
@@ -49,41 +42,26 @@ const Answers: NextPage = () => {
             justifyContent="center"
             py={4}
             flex={1}>
-
             <TableContainer>
-              <Table variant='simple'>
-                <TableCaption>Imperial to metric conversion factors</TableCaption>
+              <Table variant="striped">
                 <Thead>
                   <Tr>
-                    <Th>To convert</Th>
-                    <Th>into</Th>
-                    <Th isNumeric>multiply by</Th>
+                    <Th>Section</Th>
+                    <Th>Question #</Th>
+                    <Th>Answer</Th>
                   </Tr>
                 </Thead>
                 <Tbody>
-                  <Tr>
-                    <Td>inches</Td>
-                    <Td>millimetres (mm)</Td>
-                    <Td isNumeric>25.4</Td>
-                  </Tr>
-                  <Tr>
-                    <Td>feet</Td>
-                    <Td>centimetres (cm)</Td>
-                    <Td isNumeric>30.48</Td>
-                  </Tr>
-                  <Tr>
-                    <Td>yards</Td>
-                    <Td>metres (m)</Td>
-                    <Td isNumeric>0.91444</Td>
-                  </Tr>
+
+                  {questions.map((question, k) => (
+                    <Tr key={k}>
+                      <Td>{question.section}</Td>
+                      <Td>{question.qno}</Td>
+                      <Td>{question.answer ? question.answer : 'NOT ANSWERED'}</Td>
+                    </Tr>
+                  ))}
+
                 </Tbody>
-                <Tfoot>
-                  <Tr>
-                    <Th>To convert</Th>
-                    <Th>into</Th>
-                    <Th isNumeric>multiply by</Th>
-                  </Tr>
-                </Tfoot>
               </Table>
             </TableContainer>
           </Flex>
